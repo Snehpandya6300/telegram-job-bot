@@ -196,11 +196,4 @@ def fetch_all_jobs():
 fetch_all_jobs()
 
 # Daily at 8 AM
-schedule.every().day.at("08:00").do(fetch_all_jobs)
-
-print("Bot running...")
-
-while True:
-
-    schedule.run_pending()
-    time.sleep(60)
+fetch_all_jobs()
