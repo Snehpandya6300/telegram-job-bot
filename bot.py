@@ -63,9 +63,7 @@ seen_jobs = load_seen_jobs()
 # FILTER
 # -----------------------------
 
-full_text = f"{title}"
-
-if is_relevant(title) and is_remote(full_text):
+def is_relevant(title):
 
     title = title.lower()
 
@@ -110,7 +108,7 @@ def fetch_rss_jobs():
 
                 full_text = f"{title}"
 
-if is_relevant(title) and is_remote(full_text):
+                if is_relevant(title) and is_remote(full_text):
 
                     seen_jobs.add(job_id)
                     save_seen_job(job_id)
@@ -159,7 +157,9 @@ def fetch_linkedin_jobs():
             if job_id in seen_jobs:
                 continue
 
-            if is_relevant(title):
+            full_text = f"{title}"
+
+            if is_relevant(title) and is_remote(full_text):
 
                 seen_jobs.add(job_id)
                 save_seen_job(job_id)
