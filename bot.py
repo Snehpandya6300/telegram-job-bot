@@ -8,14 +8,11 @@ BOT_TOKEN = "8707378004:AAHpL1m3UMqSO4wjSZ2zGhV0o0O_SaP8WQI"
 CHAT_ID = "612420092"
 
 KEYWORDS = [
-    "ui",
-    "ux",
+    "ui ux designer",
+    "ui/ux designer",
     "product designer",
-    "ui/ux",
-    "figma",
-    "web designer",
-    "framer",
-    "webflow"
+    "ux designer",
+    "ui designer"
 ]
 
 RSS_FEEDS = [
@@ -66,11 +63,26 @@ seen_jobs = load_seen_jobs()
 # FILTER
 # -----------------------------
 
-def is_relevant(title):
+full_text = f"{title}"
+
+if is_relevant(title) and is_remote(full_text):
 
     title = title.lower()
 
     return any(keyword in title for keyword in KEYWORDS)
+
+def is_remote(job_text):
+
+    remote_words = [
+        "remote",
+        "worldwide",
+        "anywhere",
+        "work from home"
+    ]
+
+    job_text = job_text.lower()
+
+    return any(word in job_text for word in remote_words)
 
 # -----------------------------
 # RSS JOBS
@@ -96,7 +108,9 @@ def fetch_rss_jobs():
                 if job_id in seen_jobs:
                     continue
 
-                if is_relevant(title):
+                full_text = f"{title}"
+
+if is_relevant(title) and is_remote(full_text):
 
                     seen_jobs.add(job_id)
                     save_seen_job(job_id)
